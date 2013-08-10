@@ -8,8 +8,6 @@ require 'digest/md5'
 require "./participant"
 require './vote'
 
-scraping_time = Time.now
-
 configure :development, :test do
   set :database, 'sqlite:///db.sqlite3'
 end
@@ -45,6 +43,8 @@ get '/api/participant/:hash/votes.json' do
 end
 
 get '/update' do
+  scraping_time = Time.now
+
   base_url  = "http://elcorteingles.glamour.es/street-fashion-show/ranking/"
 
   data = Hash.new
