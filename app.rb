@@ -17,10 +17,22 @@ configure :production do
   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 end
 
+#
+# Web interface
+#
 get '/' do
+  @listing = Participant.order(:name).all
+  erb :"listing"
+end
+
+get '/participant/:hash/report' do
+  @p = Participant.find_by_namehash(params[:hash])
   erb :"participant/report"
 end
 
+#
+# JSON API
+#
 get '/api/participants.json' do
   content_type :json
   Participant.all.to_json
