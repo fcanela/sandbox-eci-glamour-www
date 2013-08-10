@@ -8,15 +8,20 @@ require 'digest/md5'
 require "./participant"
 require './vote'
 
-#set :database, 'sqlite:///db.sqlite3'
-ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
-
-get '/api/participants.json' do
-  Participant.select(:name).to_json
+configure :development, :test do
+  set :database, 'sqlite:///db.sqlite3'
+end
+configure :production do
+  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 end
 
-get '/api/participant/:participant/votes.json' do
-  "Under construction"
+get '/api/participants.json' do
+  Participant.all.to_json
+end
+
+get '/api/participant/:hash/votes.json' do
+  p = Participant.find_by_namehash(params[:hash])
+  p.votes.to_json
 end
 
 get '/update' do
@@ -24,9 +29,7 @@ get '/update' do
 
   data = Hash.new
 
-  puts "Fetching..."
   for page in 1..21
-    puts "\t...#{page}"
     url = base_url + page.to_s
     # Fetch page
     doc = Nokogiri::HTML(open(url))
