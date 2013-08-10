@@ -8,6 +8,8 @@ require 'digest/md5'
 require "./participant"
 require './vote'
 
+scraping_time = Time.now
+
 configure :development, :test do
   set :database, 'sqlite:///db.sqlite3'
 end
@@ -16,10 +18,12 @@ configure :production do
 end
 
 get '/api/participants.json' do
+  content_type :json
   Participant.all.to_json
 end
 
 get '/api/participant/:hash/votes.json' do
+  content_type :json
   p = Participant.find_by_namehash(params[:hash])
   p.votes.to_json
 end
@@ -53,7 +57,7 @@ get '/update' do
       namehash: key)
     v = Vote.create(participant: p,
       number: values[:votes],
-      created_at: Time.now)
+      created_at: scraping_time)
   end
 
 "Updated"
