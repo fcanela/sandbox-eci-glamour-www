@@ -29,8 +29,7 @@ $(function () {
 
 
     function chart(){
-    	url = 'http://eci-glamour.herokuapp.com/api/participant/<%= @p.hash %>
-/votes.json';
+    	url = 'http://eci-glamour.herokuapp.com/api/participant/<%= @p.hash %>/votes.json';
     	$.getJSON(url,function(data){ 
     		morrisTemplate.data = data;
 		Morris.Line(morrisTemplate);
