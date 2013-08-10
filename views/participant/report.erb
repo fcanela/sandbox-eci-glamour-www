@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+</head>
+<body>
+	<div id="myfirstchart" style="height: 250px;"></div>
+
+<script>
+$(function () {
+    morrisTemplate = {
+      element: 'myfirstchart',
+      data: [
+      ],
+      xkey: 'date',
+      xLabels: "Date",
+      ykeys: ['votes'],
+      ymin: '0',
+      labels: ['Total votes']
+    }
+
+    chart();
+    setInterval("location.reload(true)" , 5*60*1000);
+
+
+    function chart(){
+    	url = 'http://localhost:5000/api/participant/0694fe2fa19f00838d6ae8080edf1e08/votes.json';
+    	$.getJSON(url,function(data){ 
+    		morrisTemplate.data = data;
+		Morris.Line(morrisTemplate);
+    	})
+    }
+});
+</script>
+
+</body>
+</html>

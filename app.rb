@@ -17,6 +17,10 @@ configure :production do
   ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 end
 
+get '/' do
+  erb :"participant/report"
+end
+
 get '/api/participants.json' do
   content_type :json
   Participant.all.to_json
