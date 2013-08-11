@@ -72,7 +72,7 @@ get '/update' do
       name: values[:name],
       namehash: key)
 
-    if p.votes.count > 0 and values[:votes].to_i > p.votes.last.number
+    if p.votes.count == 0 or values[:votes].to_i < p.votes.last.number
       v = Vote.create(participant: p,
         number: values[:votes],
         created_at: scraping_time)
