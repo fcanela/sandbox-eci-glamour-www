@@ -1,9 +1,6 @@
-<html>
-<body>
+<h1>Participants listing</h1>
   <ul>
     <% for p in @listing %>
       <li><a href="/participant/<%= p.namehash %>/report"><%= p.name %></p></li>
     <% end %>
   </ul>
-</body>
-</html>
