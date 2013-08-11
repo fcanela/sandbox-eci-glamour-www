@@ -47,9 +47,15 @@ get '/update' do
 
   base_url  = "http://elcorteingles.glamour.es/street-fashion-show/ranking/"
 
+  # Get number of pages
+  url = base_url + "1"
+  doc = Nokogiri::HTML(open(url))
+  num_pages = doc.css(".interval-last").text.to_i
+
   data = Hash.new
 
-  for page in 1..21
+  for page in 1..num_pages
+    puts page
     url = base_url + page.to_s
     # Fetch page
     doc = Nokogiri::HTML(open(url))
