@@ -10,8 +10,9 @@
 	<h1> <%= @p.name %> report</h1>
 	<p>When last checked, <%= @p.name %> has <strong><%= @p.votes.last.number %></strong> votes.</p>
 
-	<div id="myfirstchart" style="height: 250px;"></div>
+	<div id="myfirstchart" style="height: 350px;"></div>
 
+	<a href="http://eci-glamour.herokuapp.com/api/participant/<%= @p.namehash %>/votes.json">Votes source</a>
 <script>
 $(function () {
     morrisTemplate = {
@@ -20,7 +21,6 @@ $(function () {
       ],
       xkey: 'date',
       ykeys: ['votes'],
-      //ymin: '0',
       labels: ['Total votes']
     }
 
@@ -37,6 +37,5 @@ $(function () {
     }
 });
 </script>
-
 </body>
 </html>
