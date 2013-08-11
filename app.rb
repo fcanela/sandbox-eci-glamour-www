@@ -71,8 +71,8 @@ get '/update' do
     p = Participant.find_or_create_by(
       name: values[:name],
       namehash: key)
-    last_num_of_votes= p.votes.last.number
-    if values[:votes].to_i > last_num_of_votes
+
+    if p.votes.count > 0 and values[:votes].to_i > p.votes.last.number
       v = Vote.create(participant: p,
         number: values[:votes],
         created_at: scraping_time)
